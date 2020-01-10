@@ -9,4 +9,17 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_pack_tag 'application'
   %body
-    = yield
+    %div.container-fluid
+      %div.row
+        %div.col-auto
+          %ul.nav.flex-column
+            - if not user_signed_in?
+              %li.nav-item
+                = link_to "Log in", :new_user_session
+              %li.nav-item
+                = link_to "Register", :new_user_registration
+            - else
+              %li.nav-item
+                Piercazzo
+        %div.col
+          = yield
