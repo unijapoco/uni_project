@@ -14,4 +14,5 @@
       = f.label :remember_me
   .actions
     = f.submit "Log in"
+%p= link_to "Sign in with Twitter", user_twitter_omniauth_authorize_path
 = render "users/shared/links"
