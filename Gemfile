@@ -19,6 +19,8 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'webpacker', '~> 4.x'
+# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'turbolinks', '~> 5'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
