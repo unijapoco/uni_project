@@ -1,2 +1,5 @@
 - @users.each do |u|
-  %p= link_to u.username, user_path(u)
+  = link_to u.username, user_path(u)
+  - if can? :destroy, u
+    = link_to "Delete", "", class: "btn btn-sm btn-danger"
+  %br
