@@ -20,6 +20,13 @@ class TipsController < ApplicationController
     @tip = Tip.find(params[:id])
   end
 
+  def settle
+    @tip = Tip.find(params[:id])
+    @tip.result = params[:tip][:result]
+    @tip.save
+    redirect_to @tip
+  end
+
   private
     def tip_params
       params.require(:tip).permit(:desc, :odds, :stake, :info)

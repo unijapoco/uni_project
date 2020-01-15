@@ -1,5 +1,5 @@
 - if @tip.errors.any?
-  %div.aler.alert-warning{ role: "alert" }
+  %div.alert.alert-warning{ role: "alert" }
     %h3
       = pluralize(@tip.errors.count, "error")
       prohibited this tip from being saved:
