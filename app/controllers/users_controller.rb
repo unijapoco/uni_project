@@ -14,6 +14,6 @@ class UsersController < ApplicationController
     @user.janitor = params["user"]["janitor"] == "1"
     @user.admin = params["user"]["admin"] == "1"
     @user.save
-    redirect_to "/users" #doesn't work as expected no idea why
+    redirect_to action: "index"
   end
 end

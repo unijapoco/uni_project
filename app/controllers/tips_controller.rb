@@ -35,6 +35,13 @@ class TipsController < ApplicationController
     redirect_to @tip
   end
 
+  def edit_info
+    @tip = Tip.find(params[:id])
+    @tip.info = params[:tip][:info]
+    @tip.save
+    redirect_to @tip
+  end
+
   private
     def tip_params
       params.require(:tip).permit(:desc, :odds, :stake, :info)

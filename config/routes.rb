@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :tips do
     member do
       post 'settle'
-      post 'amend'
+      patch 'amend'
+      patch 'edit_info'
     end
   end
 

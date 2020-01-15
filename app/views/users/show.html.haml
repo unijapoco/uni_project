@@ -2,4 +2,6 @@
 %p= @user.stats[:profit]
 %p= @user.stats[:yield]*100
 - @user.tips.each do |tip|
-  %p= render partial: "tips/tip", locals: { tip: tip }
+  = render partial: "tips/tip", locals: { tip: tip }
+  = link_to "View", tip_path(tip)
+  %br
