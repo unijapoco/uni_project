@@ -2,4 +2,14 @@
   = link_to u.username, user_path(u)
   - if can? :destroy, u
     = link_to "Delete", "", class: "btn btn-sm btn-danger"
+  - if can? :update_role, u
+    = form_with model: u, url: update_role_user_path(u.id), method: "post", class: "inline" do |f|
+      %div.custom-control.custom-control-inline.custom-checkbox
+        = f.check_box :janitor, class: "custom-control-input"
+        = f.label :janitor, class: "custom-control-label"
+      %div.custom-control.custom-control-inline.custom-checkbox
+        = f.check_box :admin, class: "custom-control-input"
+        = f.label :admin, class: "custom-control-label"
+      = f.submit "Update", class: "btn btn-primary"
+
   %br
