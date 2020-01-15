@@ -34,7 +34,7 @@ class Ability
        if user.admin?
          can :manage, :all
        elsif user.janitor?
-         #
+         can :amend, Tip
        else
          can :read, :all
        end

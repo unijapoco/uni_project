@@ -55,4 +55,29 @@ class User < ApplicationRecord
   def email_changed?
     false
   end
+
+  def stats
+    profit = 0
+    tot_stakes = 0
+    self.tips.settled.each do |t|
+      tot_stakes += t.stake
+
+      case t.result
+      when "win"
+        profit += t.stake * (t.odds - 1)
+      when "lost"
+        profit -= t.stake
+      when "halfwin"
+        profit += (t.stake/2) * (t.odds - 1)
+      when "halflost"
+        profit -= t.stake/2
+      when "push"
+        next
+      when "void"
+        tot_stakes -= t.stake
+      end
+    end
+    { profit: profit, yield: (tot_stakes == 0? 0 : profit/tot_stakes) }
+  end
+
 end

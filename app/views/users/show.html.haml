@@ -1,3 +1,5 @@
 %p= @user.username
+%p= @user.stats[:profit]
+%p= @user.stats[:yield]*100
 - @user.tips.each do |tip|
   %p= render partial: "tips/tip", locals: { tip: tip }

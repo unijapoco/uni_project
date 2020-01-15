@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :tips do
     member do
       post 'settle'
+      post 'amend'
     end
   end
 
