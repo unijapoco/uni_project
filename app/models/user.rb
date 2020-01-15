@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^\w{2,16}$/, :multiline => true
 
+  has_many :tips, dependent: :destroy
+
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_writer :login

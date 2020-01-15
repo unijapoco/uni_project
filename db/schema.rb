@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_182752) do
+ActiveRecord::Schema.define(version: 2020_01_15_111854) do
+
+  create_table "tips", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "desc"
+    t.float "odds"
+    t.integer "stake"
+    t.text "info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "result", default: 0
+    t.index ["user_id"], name: "index_tips_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: ""
@@ -35,4 +47,5 @@ ActiveRecord::Schema.define(version: 2020_01_13_182752) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "tips", "users"
 end
