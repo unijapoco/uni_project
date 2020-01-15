@@ -1,0 +1,16 @@
+%div.w-50
+  %h2 New tip
+  = form_with model: @tip do |f|
+    %div.form-group
+      = f.text_field :desc, class: "form-control"
+    %div.form-group.row
+      %div.col
+        = f.text_field :odds, class: "form-control", placeholder: "Odds"
+      %div.col
+        %div.input-group
+          = f.number_field :stake, in: 1..10, step: 1, class: "form-control", placeholder: "Stake"
+          %div.input-group-append
+            %span.input-group-text /10
+    %div.form-group
+      = f.text_area :info, class: "form-control", rows: 3, placeholder: "Info..."
+    = f.submit "Tip", class: "btn btn-primary"
