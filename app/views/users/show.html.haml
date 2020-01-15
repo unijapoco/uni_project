@@ -1,1 +1,3 @@
 %p= @user.username
+- @user.tips.each do |tip|
+  %p= render partial: "tips/tip", locals: { tip: tip }

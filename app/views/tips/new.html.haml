@@ -1,6 +1,14 @@
+- if @tip.errors.any?
+  %div.aler.alert-warning{ role: "alert" }
+    %h3
+      = pluralize(@tip.errors.count, "error")
+      prohibited this tip from being saved:
+    %ul
+      - @tip.errors.full_messages.each do |msg|
+        %li= msg
 %div.w-50
   %h2 New tip
-  = form_with model: @tip do |f|
+  = form_with scope: :tip, url: tips_path, local: true do |f|
     %div.form-group
       = f.text_field :desc, class: "form-control"
     %div.form-group.row
