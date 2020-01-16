@@ -20,6 +20,17 @@ class TipsController < ApplicationController
     @tip = Tip.find(params[:id])
   end
 
+  def index
+    @tips = Tip.all
+  end
+
+  def destroy
+    @tip = Tip.find(params[:id])
+    @tip.destroy
+
+    redirect_to tips_path
+  end
+
   def settle
     @tip = Tip.find(params[:id])
     @tip.result = params[:tip][:result]

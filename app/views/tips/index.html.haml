@@ -1,0 +1,6 @@
+- @tips.each do |t|
+  = render partial: "tips/tip", locals: { tip: t }
+  = link_to "View", tip_path(t)
+  - if can? :delete, t
+    = link_to "Remove", tip_path(t), method: :delete, class: "btn btn-danger"
+  %br
