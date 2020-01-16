@@ -1,2 +1,20 @@
-- @response.each do |m|
-  %p= "#{m['event']['start_time'].to_s} #{m['league']['name']}: #{m['event']['home']} - #{m['event']['away']} #{m['sites']['1x2']['bet365']['odds']['1']} #{m['sites']['1x2']['bet365']['odds']['X']} #{m['sites']['1x2']['bet365']['odds']['2']}"
+%table.table.table-striped
+  %thead
+    %tr
+      %th Time
+      %th League
+      %th Home
+      %th Away
+      %th 1
+      %th X
+      %th 2
+  %tbody
+    - @response.each do |m|
+      %tr
+        %td= m['event']['start_time'].strftime "%Y-%m-%d %H:%M"
+        %td= m['league']['name']
+        %td= m['event']['home']
+        %td= m['event']['away']
+        %td= m['sites']['1x2']['bet365']['odds']['1']
+        %td= m['sites']['1x2']['bet365']['odds']['X']
+        %td= m['sites']['1x2']['bet365']['odds']['2']

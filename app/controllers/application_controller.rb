@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     @response.select! { |m| m['event']['start_time'] > Time.now }
     @response.select! { |m| m['event']['start_time'] - Time.now < 60 * 60 * 24 * 2 }
     @response.select! { |m| m['sites']['1x2'].key? 'bet365' }
-    @response.sort! { |x,y| x['event']['start_date'] <=> y['event']['start_date'] }
+    @response.sort! { |x,y| x['event']['start_time'] <=> y['event']['start_time'] }
     render "/schedule"
   end
 
