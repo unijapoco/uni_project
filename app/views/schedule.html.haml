@@ -1,1 +1,2 @@
-= @response
+- @response.each do |m|
+  %p= "#{m['event']['start_time'].to_s} #{m['league']['name']}: #{m['event']['home']} - #{m['event']['away']} #{m['sites']['1x2']['bet365']['odds']['1']} #{m['sites']['1x2']['bet365']['odds']['X']} #{m['sites']['1x2']['bet365']['odds']['2']}"
