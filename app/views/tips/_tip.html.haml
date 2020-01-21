@@ -1,3 +1,6 @@
-= "#{tip.desc} @#{tip.odds} #{tip.stake}/10 "
-- unless tip.pending?
-  = "#{tip.result} "
+#{ tip.user.username }
+%h6 #{tip.desc} <span class="badge badge-primary">#{tip.result}</span>
+
+@ #{tip.odds}
+<b>#{tip.stake}</b>/10
+%br
