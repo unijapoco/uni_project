@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_155431) do
+ActiveRecord::Schema.define(version: 2020_01_21_155655) do
 
   create_table "ons", force: :cascade do |t|
     t.integer "tip_id", null: false
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 2020_01_21_155431) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
+  create_table "tip_comments", force: :cascade do |t|
+    t.integer "tip_id", null: false
+    t.integer "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tip_id"], name: "index_tip_comments_on_tip_id"
+    t.index ["user_id"], name: "index_tip_comments_on_user_id"
   end
 
   create_table "tips", force: :cascade do |t|
@@ -69,5 +79,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_155431) do
 
   add_foreign_key "ons", "tips"
   add_foreign_key "ons", "users"
+  add_foreign_key "tip_comments", "tips"
+  add_foreign_key "tip_comments", "users"
   add_foreign_key "tips", "users"
 end

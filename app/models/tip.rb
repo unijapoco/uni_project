@@ -8,6 +8,7 @@ class Tip < ApplicationRecord
   enum result: [ :pending, :win, :lost, :halfwin, :halflost, :push, :void ]
 
   has_many :ons, dependent: :destroy
+  has_many :tip_comments, dependent: :destroy
 
   scope :settled, -> { not_pending }
 end
