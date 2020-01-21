@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
 
   get "/schedule", to: "application#schedule", as: :schedule
+  get "/rankings", to: "application#rankings", as: :rankings
 
   root to: 'home#index'
 end

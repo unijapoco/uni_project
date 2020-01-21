@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     render "/schedule"
   end
 
+  def rankings
+    render "/rankings"
+  end
+
   protected
 
   def configure_permitted_parameters
