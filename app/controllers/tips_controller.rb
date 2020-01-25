@@ -1,5 +1,6 @@
 class TipsController < ApplicationController
-  before_action :authenticate_user!
+  load_and_authorize_resource
+  before_action :authenticate_user!, except: [ :show ]
 
   def new
     @tip = Tip.new
@@ -33,14 +34,17 @@ class TipsController < ApplicationController
 
   def settle
     @tip = Tip.find(params[:id])
-    @tip.result = params[:tip][:result]
-    @tip.save
-    redirect_to @tip
+    if @tip.pending?
+      @tip.result = params[:tip][:result]
+      @tip.save
+      redirect_to @tip
+    else
+      redirect_to @tip, alert: "Tip is alredy settled!"
+    end
   end
 
   def amend
     @tip = Tip.find(params[:id])
-    authorize! :amend, @tip
     @tip.result = params[:tip][:result]
     @tip.save
     redirect_to @tip

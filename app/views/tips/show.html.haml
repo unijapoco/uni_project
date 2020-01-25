@@ -1,24 +1,40 @@
-- if user_signed_in? and @tip.user_id == current_user.id and @tip.pending?
-  = form_with model: @tip, url: settle_tip_path, method: "post" do |f|
-    %div.input-group
-      %div.input-group-prepend
-        = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
-      %div.input-group-append
-        = f.submit "Settle", class: "btn btn-primary"
-- if not @tip.pending? and can? :amend, @tip
-  = form_with model: @tip, url: amend_tip_path, method: "patch" do |f|
-    %div.input-group
-      %div.input-group-prepend
-        = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
-      %div.input-group-append
-        = f.submit "Amend", class: "btn btn-primary"
-= render partial: "tip", locals: { tip: @tip }
-- if user_signed_in? and @tip.user_id == current_user.id
-  = form_with model: @tip, url: edit_info_tip_path, method: "patch" do |f|
-    %div.w-50
-      %div.form-group
-        = f.text_area :info, class: "form-control", rows: 3, placeholder: "Info..."
-    = f.submit "Edit", class: "btn btn-primary"
-
-- else
-  %p= @tip.info
+.container
+  .row
+    .col-4
+      = @tip.user.username
+    .col-3.align-self-end
+      - if can? :settle, @tip
+        = form_with model: @tip, url: settle_tip_path, method: "post" do |f|
+          %div.input-group
+            %div.input-group-prepend
+              = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
+            %div.input-group-append
+              = f.submit "Settle", class: "btn btn-primary"
+      - elsif not @tip.pending? and can? :amend, @tip
+        = form_with model: @tip, url: amend_tip_path, method: "patch" do |f|
+          %div.input-group
+            %div.input-group-prepend
+              = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
+            %div.input-group-append
+              = f.submit "Amend", class: "btn btn-primary", data: { confirm: 'Are you sure?' }
+      - elsif not @tip.pending?
+        %span.badge.badge-primary
+          =@tip.result.upcase
+  .row
+    .col-5
+      %h6 #{@tip.desc}
+    .col-2.align-self-end
+      @#{@tip.odds} <b>#{@tip.stake}</b>/10
+  .row
+    .col-6
+      - if can? :edit_info, @tip
+        = form_with model: @tip, url: edit_info_tip_path, method: "patch" do |f|
+          %div.form-group
+            = f.text_area :info, class: "form-control", rows: 3, placeholder: "Info..."
+          = f.submit "Edit", class: "btn btn-primary"
+      - else
+        = @tip.info
+  .row
+    .col
+      - if can? :delete, @tip
+        = link_to "Remove", tip_path(@tip), method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' }

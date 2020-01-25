@@ -33,10 +33,20 @@ class Ability
     user ||= User.new # guest user (not logged in)
        if user.admin?
          can :manage, :all
+         cannot :edit_info, Tip do |tip|
+           tip.user_id != user.id
+         end
        elsif user.janitor?
+         can :settle, Tip
          can :amend, Tip
+         can :delete, Tip
        else
-         can :read, :all
+         can :create, Tip
+         can :read, Tip
+         can :settle, Tip do |tip|
+           tip.user_id == user.id and tip.pending?
+         end
+         can :edit_info, Tip, user_id: user.id
        end
   end
 end

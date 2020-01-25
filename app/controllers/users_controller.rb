@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def stats
+    @user = User.find(params[:id])
+  end
+
   def update_role
     @user = User.find(params[:id])
     authorize! :update_role, @user
