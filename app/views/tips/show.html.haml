@@ -38,3 +38,7 @@
     .col
       - if can? :delete, @tip
         = link_to "Remove", tip_path(@tip), method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' }
+  .row
+    .col
+      = form_with model: [@tip, @tip.ons.build], method: "post" do |f|
+        = f.submit "On"

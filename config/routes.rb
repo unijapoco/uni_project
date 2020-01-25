@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   resources :tips do
+    resources :ons, only: [ :create, :destroy ]
     member do
       post 'settle'
       patch 'amend'
@@ -16,7 +17,6 @@ Rails.application.routes.draw do
     end
   end
   resources :relationships, only: [ :create, :destroy ]
-  resources :ons, only: [ :create, :destroy ]
 
   get "/schedule", to: "application#schedule", as: :schedule
   get "/rankings", to: "application#rankings", as: :rankings
