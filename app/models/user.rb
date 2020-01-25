@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates_format_of :username, with: /^\w{2,16}$/, :multiline => true
 
   has_many :tips, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed

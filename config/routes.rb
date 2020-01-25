@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       patch 'edit_info'
     end
   end
+  resources :posts, only: [ :new, :create, :show, :destroy ]
   resources :relationships, only: [ :create, :destroy ]
 
   get "/schedule", to: "application#schedule", as: :schedule

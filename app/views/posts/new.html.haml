@@ -1,0 +1,4 @@
+%h2 New post
+= form_with model: @post do |f|
+  = f.text_area :content, rows: 3
+  = f.submit "Post"
