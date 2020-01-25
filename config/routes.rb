@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show] do
     member do
       get 'stats'
+      get "following", "followers"
       post 'update_role'
     end
   end
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
       patch 'edit_info'
     end
   end
+  resources :relationships, only: [ :create, :destroy ]
+  resources :ons, only: [ :create, :destroy ]
 
   get "/schedule", to: "application#schedule", as: :schedule
   get "/rankings", to: "application#rankings", as: :rankings

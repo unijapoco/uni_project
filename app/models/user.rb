@@ -84,4 +84,15 @@ class User < ApplicationRecord
     { profit: profit, yield: (tot_stakes == 0? 0 : profit/tot_stakes) }
   end
 
+  def follow(u)
+    following << u
+  end
+
+  def unfollow(u)
+    following.delete(u)
+  end
+
+  def following?(u)
+    following.include?(u)
+  end
 end
