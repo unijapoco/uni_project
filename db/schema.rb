@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_102501) do
+ActiveRecord::Schema.define(version: 2020_01_26_224514) do
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "user_id", null: false
+    t.index ["post_id", "user_id"], name: "index_likes_on_post_id_and_user_id", unique: true
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
 
   create_table "ons", force: :cascade do |t|
     t.integer "tip_id", null: false
@@ -96,6 +104,8 @@ ActiveRecord::Schema.define(version: 2020_01_26_102501) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
   add_foreign_key "ons", "tips"
   add_foreign_key "ons", "users"
   add_foreign_key "post_comments", "posts"

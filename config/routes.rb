@@ -18,7 +18,10 @@ Rails.application.routes.draw do
       patch 'update_info'
     end
   end
-  resources :posts, only: [ :new, :create, :show, :destroy ]
+  resources :posts, only: [ :new, :create, :show, :destroy ] do
+    resources :likes, only: [ :create, :destroy ]
+    resources :post_comments, only: [ :create, :destroy ]
+  end
   resources :relationships, only: [ :create, :destroy ]
 
   get "/schedule", to: "application#schedule", as: :schedule
