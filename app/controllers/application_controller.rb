@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
   end
 
   def rankings
+    @users = User.all
+    @stats = []
+    @users.each { |u| @stats << u.stats }
+    @stats.sort_by! { |s| s[:yield] }.reverse!
     render "/rankings"
   end
 

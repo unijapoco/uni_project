@@ -1,0 +1,16 @@
+.row
+  .col
+    %table.table
+      %thead
+        %tr
+          %th #
+          %th User
+          %th Yield
+      %tbody
+        - @stats.each_with_index do |s, i|
+          %tr
+            %th{ scope: "row" } #{i+1}
+            %td= link_to s[:user].username, user_path(s[:user]), class: "text-dark"
+            %td= s[:yield]
+
+
