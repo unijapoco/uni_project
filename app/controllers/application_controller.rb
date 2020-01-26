@@ -17,6 +17,18 @@ class ApplicationController < ActionController::Base
     render "/rankings"
   end
 
+  def feed
+    if user_signed_in? and (params[:source] == "followed" or params[:source].nil?) and current_user.following.count > 0
+      @followed = true
+      @content = []
+      current_user.following.each { |u| @content << u.tips + u.posts }
+    else
+      @followed = false
+      @content = Tip.all + Post.all
+    end
+    render "/feed"
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.json { render nothing: true, status: :not_found }

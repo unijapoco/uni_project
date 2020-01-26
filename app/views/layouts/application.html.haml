@@ -27,7 +27,7 @@
                 = link_to "Log out", destroy_user_session_path, method: :delete, class: "text-danger"
             %li.nav-item.p-2
               = link_to "Schedule", "/schedule"
-        %div.col-sm-11.ml-sm-auto.pt-2.pl-5
+        %div.col-sm-11.ml-sm-auto.pt-2.pl-5{ style: "display: block;" }
           - flash.each do |name, msg|
             %div.alert.alert-warning{ role: "alert" }
               %p= msg

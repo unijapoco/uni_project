@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^\w{2,16}$/, :multiline => true
+  validates :desc, length: { maximum: 500 }
 
   has_many :tips, dependent: :destroy
   has_many :posts, dependent: :destroy

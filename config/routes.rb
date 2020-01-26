@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   get "/schedule", to: "application#schedule", as: :schedule
   get "/rankings", to: "application#rankings", as: :rankings
+  get "/feed", to: "application#feed", as: :feed
 
-  root to: 'home#index'
+  root to: "application#feed"
 end

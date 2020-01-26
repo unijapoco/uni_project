@@ -1,2 +1,7 @@
-%h6 #{ post.user.username }
-%p= post.content
+#{post.created_at.strftime("%a %e %b %Y")} at #{post.created_at.strftime("%k:%M")}
+%br
+#{ post.user.username }
+%br
+%p.text-wrap.mb-0= post.content
+= link_to "View", post_path(post)
+%br

@@ -1,6 +1,8 @@
-#{ tip.user.username }
-%h6.text-break #{tip.desc} <span class="badge badge-primary">#{tip.result}</span>
-
-@ #{tip.odds}
-<b>#{tip.stake}</b>/10
+%p.text-secondary.mb-0
+  #{tip.created_at.strftime("%a %e %b %Y")} at #{tip.created_at.strftime("%k:%M")}
+= link_to tip.user.username, user_path(tip.user), class: "text-dark"
+%br
+#{tip.desc} @#{tip.odds} #{tip.stake}/10
+%br
+= link_to "View", tip_path(tip)
 %br

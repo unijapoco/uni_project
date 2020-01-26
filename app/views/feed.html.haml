@@ -1,0 +1,16 @@
+.row
+  .col
+    = form_with url: feed_path, method: "get", local: true do |f|
+      = radio_button_tag :source, "followed", @followed, disabled: !user_signed_in?
+      = label_tag :source_followed, "Followed"
+      = radio_button_tag :source, "all", !@followed
+      = label_tag :source_all, "All"
+      = f.submit "Select"
+.row
+  .col.d-block.w-75
+    - @content.each do |c|
+      - if c.class == Tip
+        = render partial: "tips/tip", locals: { tip: c }
+      - elsif c.class == Post
+        = render partial: "posts/post", locals: { post: c }
+      %hr
