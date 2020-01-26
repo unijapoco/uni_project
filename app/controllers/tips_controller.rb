@@ -52,6 +52,10 @@ class TipsController < ApplicationController
 
   def edit_info
     @tip = Tip.find(params[:id])
+  end
+
+  def update_info
+    @tip = Tip.find(params[:id])
     @tip.info = params[:tip][:info]
     @tip.save
     redirect_to @tip

@@ -10,10 +10,12 @@ Rails.application.routes.draw do
   end
   resources :tips do
     resources :ons, only: [ :create, :destroy ]
+    resources :tip_comments, only: [ :create, :destroy ]
     member do
       post 'settle'
       patch 'amend'
-      patch 'edit_info'
+      get 'edit_info'
+      patch 'update_info'
     end
   end
   resources :posts, only: [ :new, :create, :show, :destroy ]
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
   get "/schedule", to: "application#schedule", as: :schedule
   get "/rankings", to: "application#rankings", as: :rankings
   get "/feed", to: "application#feed", as: :feed
+  get "/search_user", to: "application#search_user", as: :search_user
 
   root to: "application#feed"
 end

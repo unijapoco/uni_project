@@ -33,6 +33,11 @@ class ApplicationController < ActionController::Base
     render "/feed"
   end
 
+  def search_user
+    @users = User.where("username like ?", "%"+params[:q]+"%")
+    render "/search_user"
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.json { render nothing: true, status: :not_found }

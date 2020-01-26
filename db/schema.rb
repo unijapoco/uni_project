@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_155850) do
+ActiveRecord::Schema.define(version: 2020_01_26_102501) do
 
   create_table "ons", force: :cascade do |t|
     t.integer "tip_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["tip_id", "user_id"], name: "index_ons_on_tip_id_and_user_id", unique: true
     t.index ["tip_id"], name: "index_ons_on_tip_id"
     t.index ["user_id"], name: "index_ons_on_user_id"
   end

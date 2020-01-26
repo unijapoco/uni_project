@@ -1,0 +1,4 @@
+= form_with model: @tip, url: edit_info_tip_path, method: "patch" do |f|
+  %div.form-group
+    = f.text_area :info, class: "form-control", rows: 3, placeholder: "Info..."
+  = f.submit "Edit", class: "btn btn-primary"

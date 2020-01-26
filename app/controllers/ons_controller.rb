@@ -7,5 +7,7 @@ class OnsController < ApplicationController
   end
 
   def destroy
+    @tip = Tip.find(params[:tip_id])
+    @tip.ons.find(params[:id]).destroy
   end
 end

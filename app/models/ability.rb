@@ -36,8 +36,14 @@ class Ability
          cannot :edit_info, Tip do |tip|
            tip.user_id != user.id
          end
+         cannot :settle, Tip do |tip|
+           tip.pending?
+         end
        elsif user.janitor?
          can :settle, Tip
+         cannot :settle, Tip do |tip|
+           tip.pending?
+         end
          can :amend, Tip
          can :delete, Tip
        else
