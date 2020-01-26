@@ -1,1 +1,21 @@
+%p.text-secondary.mb-0
+  #{@post.created_at.strftime("%a %e %b %Y")} at #{@post.created_at.strftime("%k:%M")}
+= link_to @post.user.username, user_path(@post.user), class: "text-dark"
 = @post.content
+- if can? :delete, @post
+  = link_to "Remove", post_path(@post), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
+- if not @post.liking_users.include?(current_user)
+  = link_to @post.likes.count.to_s + " On", post_likes_path(@post), method: :post, class: "text-dark"
+- else
+  = link_to @post.likes.count.to_s + " On", post_like_path(@post), method: :delete
+%h2 Comments
+- @post.post_comments.each do |c|
+  #{c.user.username}
+  %br
+  #{c.content}
+  %br
+  - if can? :delete, c
+    = link_to "Remove", post_post_comment_path(@post, c), method: "delete", class: "text-danger"
+= form_with model: [@post, @post.post_comments.build ], local: true do |f|
+  = f.text_area :content
+  = f.submit
