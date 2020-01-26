@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @stats = @user.stats
     @content = @user.tips + @user.posts
   end
 
