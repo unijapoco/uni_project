@@ -12,12 +12,18 @@
   .col
     .row
       .col
+        =link_to "Following #{@user.following.count}", following_user_path(@user)
+        =link_to "Followers #{@user.followers.count}", followers_user_path(@user)
+    .row
+      .col
         - if user_signed_in? and @user != current_user
-          = form_with(url: relationships_path, method: "post") do |f|
-            = hidden_field_tag :followed_id, @user.id
-            = f.submit "Follow"
-          = form_for(current_user.active_relationships.find_by(followed_id: @user.id), method: "delete") do |f|
-            = f.submit "Unfollow"
+          - if not current_user.following?(@user)
+            = form_with(url: relationships_path, method: "post") do |f|
+              = hidden_field_tag :followed_id, @user.id
+              = f.submit "Follow"
+          - else
+            = form_for(current_user.active_relationships.find_by(followed_id: @user.id), method: "delete") do |f|
+              = f.submit "Unfollow"
     .row
       .col
         #{@user.desc}

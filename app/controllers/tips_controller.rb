@@ -11,6 +11,7 @@ class TipsController < ApplicationController
     @tip = @user.tips.new(tip_params)
 
     if @tip.save
+      TipNotifierMailer.tip_notifications_mail(@tip).deliver_later
       redirect_to @tip
     else
       render 'new'
