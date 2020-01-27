@@ -3,8 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users, only: [:index, :show] do
     member do
-      get 'stats'
-      get "following", "followers"
+      get 'following', 'followers'
       post 'update_role'
       post 'update_extra'
     end

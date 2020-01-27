@@ -9,6 +9,7 @@ class TipCommentsController < ApplicationController
 
   def destroy
     @tip = Tip.find(params[:tip_id])
+    authorize! :delete, @tip
     @tip.tip_comments.find(params[:id]).destroy
     redirect_to tip_path(@tip)
   end

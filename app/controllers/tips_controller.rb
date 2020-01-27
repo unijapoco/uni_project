@@ -30,7 +30,7 @@ class TipsController < ApplicationController
     @tip = Tip.find(params[:id])
     @tip.destroy
 
-    redirect_to tips_path
+    redirect_to root_path
   end
 
   def settle

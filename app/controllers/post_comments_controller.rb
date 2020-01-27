@@ -9,6 +9,7 @@ class PostCommentsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:post_id])
+    authorize! :delete, @post
     @post.post_comments.find(params[:id]).destroy
     redirect_to post_path(@post)
   end

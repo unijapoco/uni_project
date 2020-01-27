@@ -31,28 +31,44 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     user ||= User.new # guest user (not logged in)
-       if user.admin?
-         can :manage, :all
-         cannot :edit_info, Tip do |tip|
-           tip.user_id != user.id
-         end
-         cannot :settle, Tip do |tip|
-           !tip.pending?
-         end
-       elsif user.janitor?
-         can :settle, Tip
-         cannot :settle, Tip do |tip|
-           !tip.pending?
-         end
-         can :amend, Tip
-         can :delete, Tip
-       else
-         can :create, Tip
-         can :read, Tip
-         can :settle, Tip do |tip|
-           tip.user_id == user.id and tip.pending?
-         end
-         can :edit_info, Tip, user_id: user.id
-       end
+    if user.admin?
+      can :manage, :all
+      cannot :edit_info, Tip do |tip|
+        tip.user_id != user.id
+      end
+      cannot :settle, Tip do |tip|
+        !tip.pending?
+      end
+    elsif user.janitor?
+      can :settle, Tip
+      cannot :settle, Tip do |tip|
+        !tip.pending?
+      end
+      can :amend, Tip
+      can :delete, Tip
+
+      can :delete, TipComment
+
+      can :delete, Post
+
+      can :delete, PostComment
+    end
+    can :create, Tip
+    can :read, Tip
+    can :settle, Tip do |tip|
+      tip.user_id == user.id and tip.pending?
+    end
+    can :edit_info, Tip, user_id: user.id
+    can :update_info, Tip, user_id: user.id
+
+    can :delete, TipComment, user_id: user.id
+
+    can :create, Post
+    can :read, Post
+    can :delete, Post, user_id: user.id
+
+    can :delete, PostComment, user_id: user.id
+
+    can :update_extra, User, id: user.id
   end
 end
