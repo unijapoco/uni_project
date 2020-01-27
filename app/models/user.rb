@@ -2,8 +2,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[twitter]
+
+  after_create :set_default_notifications_email
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^\w{2,16}$/, :multiline => true
@@ -110,4 +112,9 @@ class User < ApplicationRecord
   def following?(u)
     following.include?(u)
   end
+
+  private
+    def set_default_notifications_email
+      self.notifications_email = self.email
+    end
 end

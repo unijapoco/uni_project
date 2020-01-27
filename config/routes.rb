@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'stats'
       get "following", "followers"
       post 'update_role'
+      post 'update_extra'
     end
   end
   resources :tips do

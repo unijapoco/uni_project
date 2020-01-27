@@ -21,4 +21,11 @@ class UsersController < ApplicationController
     @user.save
     redirect_to action: "index"
   end
+
+  def update_extra
+    current_user.desc = params[:user][:desc]
+    current_user.notifications_email = params[:user][:notifications_email]
+    current_user.save
+    redirect_to user_path(current_user)
+  end
 end
