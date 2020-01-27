@@ -45,7 +45,6 @@ class Ability
         !tip.pending?
       end
       can :amend, Tip
-      can :delete, Tip
 
       can :delete, TipComment
 
