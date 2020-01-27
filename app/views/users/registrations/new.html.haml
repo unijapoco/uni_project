@@ -20,6 +20,8 @@
     = f.label :password_confirmation
     %br/
     = f.password_field :password_confirmation, autocomplete: "new-password"
+  .field
+    = recaptcha_tags
   .actions
     = f.submit "Sign up"
 = render "users/shared/links"
