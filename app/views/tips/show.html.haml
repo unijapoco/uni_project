@@ -1,43 +1,48 @@
-%p.text-secondary.mb-0
-  #{@tip.created_at.strftime("%a %e %b %Y")} at #{@tip.created_at.strftime("%k:%M")}
-= link_to @tip.user.username, user_path(@tip.user), class: "text-dark"
-%br
-#{@tip.desc} @#{@tip.odds} #{@tip.stake}/10
-- if can? :settle, @tip
-  = form_with model: @tip, url: settle_tip_path, method: "post" do |f|
-    %div.input-group
-      %div.input-group-prepend
-        = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
-      %div.input-group-append
-        = f.submit "Settle", class: "btn btn-primary"
-- elsif not @tip.pending? and can? :amend, @tip
-  = form_with model: @tip, url: amend_tip_path, method: "patch" do |f|
-    %div.input-group
-      %div.input-group-prepend
-        = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
-      %div.input-group-append
-        = f.submit "Amend", class: "btn btn-primary", data: { confirm: 'Are you sure?' }
-- elsif not @tip.pending?
-  %span.badge.badge-primary
-    =@tip.result.upcase
-- if can? :edit_info, @tip
-  = link_to "Edit info", edit_info_tip_path
-- else
-  = @tip.info
-- if can? :delete, @tip
-  = link_to "Remove", tip_path(@tip), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
-- if not @tip.on_users.include?(current_user)
-  = link_to @tip.ons.count.to_s + " On", tip_ons_path(@tip), method: :post, class: "text-dark"
-- else
-  = link_to @tip.ons.count.to_s + " On", tip_on_path(@tip, @tip.ons.find_by(user_id: current_user.id)), method: :delete
-%h2 Comments
-- @tip.tip_comments.each do |c|
-  #{c.user.username}
+.w-75
+  %p.text-secondary.mb-0
+    #{@tip.created_at.strftime("%a %e %b %Y")} at #{@tip.created_at.strftime("%k:%M")}
+  = link_to @tip.user.username, user_path(@tip.user), class: "text-dark font-weight-bold"
   %br
-  #{c.content}
-  %br
-  - if can? :delete, c
-    = link_to "Remove", tip_tip_comment_path(@tip, c), method: "delete", class: "text-danger"
-= form_with model: [@tip, @tip.tip_comments.build ], local: true do |f|
-  = f.text_area :content
-  = f.submit
+  %p.mb-0.text-wrap.text-break #{@tip.desc} @#{@tip.odds} #{@tip.stake}/10
+  - if can? :settle, @tip
+    = form_with model: @tip, url: settle_tip_path, method: "post" do |f|
+      %div.input-group.pb-2.pt-2
+        %div.input-group-prepend
+          = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
+        %div.input-group-append
+          = f.submit "Settle", class: "btn btn-primary"
+  - elsif not @tip.pending? and can? :amend, @tip
+    = form_with model: @tip, url: amend_tip_path, method: "patch" do |f|
+      %div.input-group.pb-2.pt-2
+        %div.input-group-prepend
+          = f.select :result, [['Win',:win],['Lost',:lost],['Half win',:halfwin],['Half lost',:halflost],['Push',:push],['Void',:void]], {}, { class: "custom-select"}
+        %div.input-group-append
+          = f.submit "Amend", class: "btn btn-primary", data: { confirm: 'Are you sure?' }
+  - elsif not @tip.pending?
+    %span.badge.badge-primary
+      =@tip.result.upcase
+  %p.mb-0.text-wrap.text-break.pt-2= @tip.info
+  - if can? :edit_info, @tip
+    = link_to "Edit info", edit_info_tip_path
+  - if can? :delete, @tip
+    %br
+    = link_to "Remove", tip_path(@tip), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
+  .pt-2
+    - if not @tip.on_users.include?(current_user)
+      = link_to @tip.ons.count.to_s + " On", tip_ons_path(@tip), method: :post, class: "btn btn-sm btn-secondary"
+    - else
+      = link_to @tip.ons.count.to_s + " On", tip_on_path(@tip, @tip.ons.find_by(user_id: current_user.id)), method: :delete, class: "btn btn-sm btn-primary"
+  %h2.mt-2 Comments
+  - @tip.tip_comments.each do |c|
+    = link_to c.user.username, user_path(c.user), class: "text-dark font-weight-bold"
+    %span.text-wrap.text-break
+      #{c.content}
+    %br
+    - if can? :delete, c
+      = link_to "Remove", tip_tip_comment_path(@tip, c), method: "delete", class: "text-danger"
+      %br
+  = form_with model: [@tip, @tip.tip_comments.build ], local: true do |f|
+    .from-group.mt-4.w-50
+      = f.text_area :content, class: "form-control"
+      %br
+      = f.submit "Comment", class: "btn btn-primary"

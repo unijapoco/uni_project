@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       post 'update_extra'
     end
   end
-  resources :tips do
+  resources :tips, except: [:index] do
     resources :ons, only: [ :create, :destroy ]
     resources :tip_comments, only: [ :create, :destroy ]
     member do

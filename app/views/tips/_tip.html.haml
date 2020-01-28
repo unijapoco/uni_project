@@ -2,7 +2,6 @@
   #{tip.created_at.strftime("%a %e %b %Y")} at #{tip.created_at.strftime("%k:%M")}
 = link_to tip.user.username, user_path(tip.user), class: "text-dark font-weight-bold"
 %br
-#{tip.desc} @#{tip.odds} #{tip.stake}/10
-%br
+%p.text-wrap.text-break.mb-0 #{tip.desc} @#{tip.odds} #{tip.stake}/10
 = link_to "View", tip_path(tip)
 %br

@@ -1,2 +1,4 @@
+%h2 Followers
 - @users.each do |u|
-  = link_to u.username, user_path(u), class: "text-dark"
+  = link_to u.username, user_path(u), class: "text-dark font-weight-bold"
+  %br
