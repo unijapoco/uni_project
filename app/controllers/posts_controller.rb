@@ -8,10 +8,10 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    print @post
     if @post.save
       redirect_to @post
     else
+      print @post.errors.any?
       render "new"
     end
   end

@@ -3,11 +3,21 @@ class OnsController < ApplicationController
 
   def create
     @tip = Tip.find(params[:tip_id])
-    @on = @tip.ons.create(user: current_user)
+    begin
+      @on = @tip.ons.create(user: current_user)
+      redirect_to tip_path(@tip)
+    rescue ActiveRecord::RecordNotUnique
+      render 'tips/new'
+    end
   end
 
   def destroy
     @tip = Tip.find(params[:tip_id])
-    @tip.ons.find(params[:id]).destroy
+    begin
+      @tip.ons.find(params[:id]).destroy
+      redirect_to tip_path(@tip)
+    rescue ActiveRecord::RecordNotFound
+      render 'tips/new'
+    end
   end
 end

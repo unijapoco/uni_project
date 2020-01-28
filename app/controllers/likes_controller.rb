@@ -3,13 +3,21 @@ class LikesController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    @on = @post.likes.create(user: current_user)
-    redirect_to post_path(@post)
+    begin
+      @on = @post.likes.create(user: current_user)
+      redirect_to post_path(@post)
+    rescue ActiveRecord::RecordNotUnique
+      render 'posts/show'
+    end
   end
 
   def destroy
     @post = Post.find(params[:post_id])
-    @post.likes.find(params[:id]).destroy
-    redirect_to post_path(@post)
+    begin
+      @post.likes.find(params[:id]).destroy
+      redirect_to post_path(@post)
+    rescue ActiveRecord::RecordNotFound
+      render 'posts/show'
+    end
   end
 end

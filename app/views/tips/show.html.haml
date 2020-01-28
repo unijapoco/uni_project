@@ -27,10 +27,9 @@
 - if can? :delete, @tip
   = link_to "Remove", tip_path(@tip), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
 - if not @tip.on_users.include?(current_user)
-  = form_with model: [@tip, @tip.ons.build], method: "post" do |f|
-    = f.submit "On"
+  = link_to @tip.ons.count.to_s + " On", tip_ons_path(@tip), method: :post, class: "text-dark"
 - else
-  = link_to @tip.ons.count.to_s + " On", tip_on_path(@tip), method: :delete
+  = link_to @tip.ons.count.to_s + " On", tip_on_path(@tip, @tip.ons.find_by(user_id: current_user.id)), method: :delete
 %h2 Comments
 - @tip.tip_comments.each do |c|
   #{c.user.username}

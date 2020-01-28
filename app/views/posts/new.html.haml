@@ -1,3 +1,11 @@
+- if @post.errors.any?
+  .alert.alert-warning{ role: "alert" }
+    %h3
+      = pluralize(@post.errors.count, "error")
+      prohibited this tip from being saved:
+    %ul
+      - @post.errors.full_messages.each do |msg|
+        %li= msg
 %h2 New post
 = form_with model: @post do |f|
   = f.text_area :content, rows: 3

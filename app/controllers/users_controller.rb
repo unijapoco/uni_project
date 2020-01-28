@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    redirect_to new_user_session_path unless user_singed_in?
+    redirect_to new_user_session_path unless user_signed_in?
     authorize! :index, current_user
     @users = User.all
   end
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def update_role
     @user = User.find(params[:id])
-    redirect_to new_user_session_path unless user_singed_in?
+    redirect_to new_user_session_path unless user_signed_in?
     authorize! :update_role, currrent_user
     @user.janitor = params["user"]["janitor"] == "1"
     @user.admin = params["user"]["admin"] == "1"
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def update_extra
-    redirect_to new_user_session_path unless user_singed_in?
+    redirect_to new_user_session_path unless user_signed_in?
     authorize! :update_extra, currrent_user
     current_user.desc = params[:user][:desc]
     current_user.notifications_email = params[:user][:notifications_email]
