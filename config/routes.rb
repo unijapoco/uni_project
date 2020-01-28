@@ -4,8 +4,12 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show] do
     member do
       get 'following', 'followers'
-      post 'update_role'
+      post 'admin_jani'
+      post 'admin_dejani'
+      post 'admin_admin'
+      post 'admin_deadmin'
       post 'update_extra'
+      delete 'admin_delete'
     end
   end
   resources :tips, except: [:index] do

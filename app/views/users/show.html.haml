@@ -11,24 +11,25 @@
       %hr
   .col
     .row
-      .col
+      .col.p-2
         =link_to "Following #{@user.following.count}", following_user_path(@user)
+        %br
         =link_to "Followers #{@user.followers.count}", followers_user_path(@user)
     .row
-      .col
+      .col.p-2
         - if user_signed_in? and @user != current_user
           - if not current_user.following?(@user)
             = form_with(url: relationships_path, method: "post") do |f|
               = hidden_field_tag :followed_id, @user.id
-              = f.submit "Follow"
+              = f.submit "Follow", class: "btn btn-sm btn-primary"
           - else
             = form_for(current_user.active_relationships.find_by(followed_id: @user.id), method: "delete") do |f|
-              = f.submit "Unfollow"
+              = f.submit "Unfollow", class: "btn btn-sm btn-danger"
     .row
-      .col
+      .col.p-2
         #{@user.desc}
     .row
-      .col
+      .col.p-2
         #{@user.username}'s profit is #{@stats[:profit]}
         %br
         #{@user.username}'s yield is #{@stats[:yield]*100}%
@@ -37,5 +38,5 @@
         %br
         #{@user.username}'s average stake is #{@stats[:avg_stake]}
         %br
-        #{@user.username} posted #{@stats[:tips]} #{pluralize(@stats[:tips], "tip")}
+        #{@user.username} posted #{pluralize(@stats[:tips], "tip")}
         %br

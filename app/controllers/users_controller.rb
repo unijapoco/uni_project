@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def index
     redirect_to new_user_session_path unless user_signed_in?
     authorize! :index, current_user
-    @users = User.all
+    @users = User.all.order :username
   end
 
   def show
@@ -10,16 +10,6 @@ class UsersController < ApplicationController
     @stats = @user.stats
     @content = @user.tips + @user.posts
     @content.sort_by! { |c| c.created_at }.reverse!
-  end
-
-  def update_role
-    @user = User.find(params[:id])
-    redirect_to new_user_session_path unless user_signed_in?
-    authorize! :update_role, current_user
-    @user.janitor = params["user"]["janitor"] == "1"
-    @user.admin = params["user"]["admin"] == "1"
-    @user.save
-    redirect_to action: "index"
   end
 
   def update_extra
@@ -37,5 +27,39 @@ class UsersController < ApplicationController
 
   def followers
     @users = User.find(params[:id]).followers
+  end
+
+  def admin_delete
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_path
+  end
+
+  def admin_jani
+    @user = User.find(params[:id])
+    @user.janitor = true
+    @user.save
+    redirect_to users_path
+  end
+
+  def admin_dejani
+    @user = User.find(params[:id])
+    @user.janitor = false
+    @user.save
+    redirect_to users_path
+  end
+
+  def admin_admin
+    @user = User.find(params[:id])
+    @user.admin = true
+    @user.save
+    redirect_to users_path
+  end
+
+  def admin_deadmin
+    @user = User.find(params[:id])
+    @user.admin = false
+    @user.save
+    redirect_to users_path
   end
 end

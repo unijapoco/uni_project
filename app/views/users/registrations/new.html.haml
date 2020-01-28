@@ -22,6 +22,7 @@
     = f.password_field :password_confirmation, autocomplete: "new-password"
   .field
     = recaptcha_tags
+    %br/
   .actions
     = f.submit "Sign up"
 = render "users/shared/links"
