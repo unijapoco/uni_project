@@ -3,5 +3,9 @@
 = link_to tip.user.username, user_path(tip.user), class: "text-dark font-weight-bold"
 %br
 %p.text-wrap.text-break.mb-0 #{tip.desc} @#{tip.odds} #{tip.stake}/10
+- if not tip.pending?
+  %span.badge.badge-primary
+    =tip.result.upcase
+    %br
 = link_to "View", tip_path(tip)
 %br
