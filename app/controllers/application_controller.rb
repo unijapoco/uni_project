@@ -40,6 +40,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:notice] = "The resource you tried to access does not exist"
+    redirect_to ""
+  end
+
   protected
 
   def configure_permitted_parameters

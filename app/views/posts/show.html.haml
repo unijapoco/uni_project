@@ -1,20 +1,28 @@
-%p.text-secondary.mb-0
-  #{@post.created_at.strftime("%a %e %b %Y")} at #{@post.created_at.strftime("%k:%M")}
-= link_to @post.user.username, user_path(@post.user), class: "text-dark"
-= @post.content
-- if can? :delete, @post
-  = link_to "Remove", post_path(@post), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
-- if not @post.liking_users.include?(current_user)
-- else
-  = link_to @post.likes.count.to_s + " Like", post_like_path(@post, @post.likes.find_by(user_id: current_user.id)), method: :delete
-%h2 Comments
-- @post.post_comments.each do |c|
-  #{c.user.username}
+.w-75
+  %p.text-secondary.mb-0
+    #{@post.created_at.strftime("%a %e %b %Y")} at #{@post.created_at.strftime("%k:%M")}
+  = link_to @post.user.username, user_path(@post.user), class: "text-dark font-weight-bold"
   %br
-  #{c.content}
+  %p.text-wrap.text-break.mb-0= @post.content
   %br
-  - if can? :delete, c
-    = link_to "Remove", post_post_comment_path(@post, c), method: "delete", class: "text-danger"
-= form_with model: [@post, @post.post_comments.build ], local: true do |f|
-  = f.text_area :content
-  = f.submit
+  - if can? :delete, @post
+    = link_to "Remove", post_path(@post), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' }
+    %br
+  - if not @post.liking_users.include?(current_user)
+    = link_to @post.likes.count.to_s + " Like", post_likes_path(@post), method: :post, class: "text-dark"
+  - else
+    = link_to @post.likes.count.to_s + " Like", post_like_path(@post, @post.likes.find_by(user_id: current_user.id)), method: :delete
+  %h2.mt-2 Comments
+  - @post.post_comments.each do |c|
+    = link_to c.user.username, user_path(c.user), class: "text-dark font-weight-bold"
+    %span.text-wrap.text-break
+      #{c.content}
+    %br
+    - if can? :delete, c
+      = link_to "Remove", post_post_comment_path(@post, c), method: "delete", class: "text-danger"
+      %br
+  = form_with model: [@post, @post.post_comments.build ], local: true do |f|
+    .from-group.mt-4.w-50
+      = f.text_area :content, class: "form-control"
+      %br
+      = f.submit "Comment", class: "btn btn-primary"

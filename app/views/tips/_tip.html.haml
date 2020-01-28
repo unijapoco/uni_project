@@ -1,6 +1,6 @@
 %p.text-secondary.mb-0
   #{tip.created_at.strftime("%a %e %b %Y")} at #{tip.created_at.strftime("%k:%M")}
-= link_to tip.user.username, user_path(tip.user), class: "text-dark"
+= link_to tip.user.username, user_path(tip.user), class: "text-dark font-weight-bold"
 %br
 #{tip.desc} @#{tip.odds} #{tip.stake}/10
 %br

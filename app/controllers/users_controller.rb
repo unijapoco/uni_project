@@ -9,12 +9,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @stats = @user.stats
     @content = @user.tips + @user.posts
+    @content.sort_by! { |c| c.created_at }.reverse!
   end
 
   def update_role
     @user = User.find(params[:id])
     redirect_to new_user_session_path unless user_signed_in?
-    authorize! :update_role, currrent_user
+    authorize! :update_role, current_user
     @user.janitor = params["user"]["janitor"] == "1"
     @user.admin = params["user"]["admin"] == "1"
     @user.save
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
 
   def update_extra
     redirect_to new_user_session_path unless user_signed_in?
-    authorize! :update_extra, currrent_user
+    authorize! :update_extra, current_user
     current_user.desc = params[:user][:desc]
     current_user.notifications_email = params[:user][:notifications_email]
     current_user.save

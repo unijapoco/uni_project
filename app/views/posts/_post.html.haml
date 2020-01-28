@@ -1,7 +1,6 @@
-#{post.created_at.strftime("%a %e %b %Y")} at #{post.created_at.strftime("%k:%M")}
+%p.text-secondary.mb-0 #{post.created_at.strftime("%a %e %b %Y")} at #{post.created_at.strftime("%k:%M")}
+= link_to post.user.username, user_path(post.user), class: "text-dark"
 %br
-#{ post.user.username }
-%br
-%p.text-wrap.mb-0= post.content
+%p.text-wrap.text-break.mb-0= post.content
 = link_to "View", post_path(post)
 %br

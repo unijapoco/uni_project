@@ -11,7 +11,6 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post
     else
-      print @post.errors.any?
       render "new"
     end
   end

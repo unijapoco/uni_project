@@ -39,12 +39,17 @@ class Ability
       cannot :settle, Tip do |tip|
         !tip.pending?
       end
+      cannot :amend, Tip do |tip|
+        tip.pending?
+      end
     elsif user.janitor?
       can :settle, Tip
       cannot :settle, Tip do |tip|
         !tip.pending?
       end
-      can :amend, Tip
+      can :amend, Tip do |tip|
+        !tip.pending?
+      end
 
       can :delete, TipComment
 
