@@ -6,8 +6,8 @@
       = radio_button_tag :source, "all", !@followed
       = label_tag :source_all, "All"
       = f.submit "Select"
-.row
-  .col.d-block.w-75
+.row.w-75
+  .col
     - @content.each do |c|
       - if c.class == Tip
         = render partial: "tips/tip", locals: { tip: c }

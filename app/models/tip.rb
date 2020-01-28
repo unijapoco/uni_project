@@ -14,4 +14,5 @@ class Tip < ApplicationRecord
   has_many :tip_comments, dependent: :destroy
 
   scope :settled, -> { not_pending }
+  scope :valid, -> { not_void }
 end
