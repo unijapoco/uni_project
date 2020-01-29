@@ -13,7 +13,11 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }, allow_blank: true, allow_nil: true
 
   has_many :tips, dependent: :destroy
+  has_many :ons, dependent: :destroy
+  has_many :tip_comments, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
