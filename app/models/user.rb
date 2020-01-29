@@ -102,7 +102,7 @@ class User < ApplicationRecord
       profit: profit,
       yield: (tot_stakes == 0? 0 : profit/tot_stakes),
       winratio: (wr_den == 0? 0 : wr_num/wr_den),
-      avg_stake: (self.tips.settled.count == 0? 0 : tot_stakes/self.tips.settled.valid.count),
+      avg_stake: (self.tips.settled.valid.count == 0? 0 : tot_stakes/self.tips.settled.valid.count),
       tips: self.tips.settled.count }
   end
 
