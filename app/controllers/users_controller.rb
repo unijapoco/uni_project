@@ -31,12 +31,14 @@ class UsersController < ApplicationController
 
   def admin_delete
     @user = User.find(params[:id])
+    authorize! :admin_delete, @user
     @user.destroy
     redirect_to users_path
   end
 
   def admin_jani
     @user = User.find(params[:id])
+    authorize! :admin_jani, @user
     @user.janitor = true
     @user.save
     redirect_to users_path
@@ -44,6 +46,7 @@ class UsersController < ApplicationController
 
   def admin_dejani
     @user = User.find(params[:id])
+    authorize! :admin_dejani, @user
     @user.janitor = false
     @user.save
     redirect_to users_path
@@ -51,6 +54,7 @@ class UsersController < ApplicationController
 
   def admin_admin
     @user = User.find(params[:id])
+    authorize! :admin_admin, @user
     @user.admin = true
     @user.save
     redirect_to users_path
@@ -58,6 +62,7 @@ class UsersController < ApplicationController
 
   def admin_deadmin
     @user = User.find(params[:id])
+    authorize! :admin_deadmin, @user
     @user.admin = false
     @user.save
     redirect_to users_path
