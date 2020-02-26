@@ -30,13 +30,13 @@
         #{@user.desc}
     .row
       .col.p-2
-        #{@user.username}'s profit is #{@stats[:profit]}
+        #{@user.username}'s profit is #{@stats[:profit].round(2)}
         %br
-        #{@user.username}'s yield is #{@stats[:yield]*100}%
+        #{@user.username}'s yield is #{@stats[:yield]*100.round(2)}%
         %br
-        #{@user.username}'s win ratio is #{@stats[:winratio]*100}%
+        #{@user.username}'s win ratio is #{@stats[:winratio]*100.round(2)}%
         %br
-        #{@user.username}'s average stake is #{@stats[:avg_stake]}
+        #{@user.username}'s average stake is #{@stats[:avg_stake].round(2)}
         %br
-        #{@user.username} posted #{pluralize(@stats[:tips], "tip")}
+        #{@user.username} posted #{pluralize(@stats[:tips].round(2), "tip")}
         %br
